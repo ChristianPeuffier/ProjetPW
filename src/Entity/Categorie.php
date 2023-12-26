@@ -4,8 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CategorieRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
 class Categorie
@@ -16,18 +15,18 @@ class Categorie
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le nom est obligatoire.')]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le code raccourci est obligatoire.')]
     private ?string $code_raccourci = null;
 
-    #[ORM\OneToOne(mappedBy: 'categorie', targetEntity: Licencie::class)]
-    private Collection $licencie;
+    #[ORM\ManyToOne(inversedBy: 'categorie')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message: 'Le licencié est obligatoire.')]
+    private ?Licencie $licencie = null;
 
-    public function __construct()
-        {
-            $this->licencie = new ArrayCollection();
-        }
 
     public function getId(): ?int
     {
@@ -57,35 +56,16 @@ class Categorie
 
         return $this;
     }
-    /**
-     * @return Collection<int, Licencie>
-     */
-    public function getLicencie(): Collection
+
+public function getLicencie(): ?Licencie
     {
         return $this->licencie;
     }
 
-    public function addLicencie(Licencie $licencie): static
+    public function setLicencie(Licencie $licencie): static
     {
-        if (!$this->licencie->contains($licencie)) {
-            $this->licencie->add($licencie);
-            $licencie->setCategorie($this);
-        }
+        $this->licencie = $licencie;
 
         return $this;
     }
-
-    public function removeLicencie(Licencie $licencie): static
-    {
-        if ($this->licencie->removeElement($licencie)) {
-            // set the owning side to null (unless already changed)
-            if ($licencie->getCategorie() === $this) {
-                $licencie->setCategorie(null);
-            }
-        }
-
-        return $this;
-    }
-
-
 }

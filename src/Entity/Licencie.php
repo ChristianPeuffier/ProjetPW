@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\LicencieRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: LicencieRepository::class)]
 class Licencie
@@ -15,35 +16,39 @@ class Licencie
     private ?int $id = null;
 
     #[ORM\Column(type: Types::SMALLINT,unique: true)]
-    private ?int $numéroLicence = null;
+    #[Assert\Positive(message: 'Le numéro de licence doit être un nombre positif.')]
+    private ?int $numeroLicence = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le nom est obligatoire.')]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $prénom = null;
+    #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: 'Le prénom est obligatoire.')]
+    private ?string $prenom = null;
 
-    #[ORM\OneToOne(inversedBy: 'licencie')]
+    #[ORM\OneToMany(mappedBy: 'licencie', targetEntity: Categorie::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?categorie $categorie = null;
 
     #[ORM\ManyToOne(inversedBy: 'licencie')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true,onDelete: 'SET NULL')]
     private ?contact $contact = null;
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNuméroLicence(): ?int
+    public function getNumeroLicence(): ?int
     {
-        return $this->numéroLicence;
+        return $this->numeroLicence;
     }
 
-    public function setNuméroLicence(int $numéroLicence): static
+    public function setNumeroLicence(int $numéroLicence): static
     {
-        $this->numéroLicence = $numéroLicence;
+        $this->numeroLicence = $numéroLicence;
 
         return $this;
     }
@@ -60,14 +65,14 @@ class Licencie
         return $this;
     }
 
-    public function getPrénom(): ?string
+    public function getPrenom(): ?string
     {
-        return $this->prénom;
+        return $this->prenom;
     }
 
-    public function setPrénom(string $prénom): static
+    public function setPrenom(string $prenom): static
     {
-        $this->prénom = $prénom;
+        $this->prenom = $prenom;
 
         return $this;
     }

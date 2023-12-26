@@ -6,8 +6,11 @@ use App\Repository\ContactRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'Cet email est déjà utilisé.')]
 class Contact
 {
     #[ORM\Id]
@@ -16,24 +19,33 @@ class Contact
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le nom est obligatoire.')]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $prénom = null;
+    #[Assert\NotBlank(message: 'Le prénom est obligatoire.')]
+    private ?string $prenom = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'L\'email est obligatoire.')]
+    #[Assert\Email(message: 'L\'email n\'est pas valide.')]
     private ?string $email = null;
 
     #[ORM\Column(length: 10)]
-    private ?string $téléphone = null;
+    #[Assert\NotBlank(message: 'Le téléphone est obligatoire.')]
+    #[Assert\Regex(pattern: '/^0[1-9]([-. ]?[0-9]{2}){4}$/', message: 'Le numéro de téléphone n\'est pas valide.')]
+    private ?string $telephone = null;
 
     #[ORM\OneToMany(mappedBy: 'contact', targetEntity: Licencie::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private Collection $licencie;
 
     public function __construct()
     {
         $this->licencie = new ArrayCollection();
     }
+
+
 
     public function getId(): ?int
     {
@@ -52,14 +64,14 @@ class Contact
         return $this;
     }
 
-    public function getPrénom(): ?string
+    public function getPrenom(): ?string
     {
-        return $this->prénom;
+        return $this->prenom;
     }
 
-    public function setPrénom(string $prénom): static
+    public function setPrenom(string $prenom): static
     {
-        $this->prénom = $prénom;
+        $this->prenom = $prenom;
 
         return $this;
     }
@@ -76,14 +88,14 @@ class Contact
         return $this;
     }
 
-    public function getTéléphone(): ?string
+    public function getTelephone(): ?string
     {
-        return $this->téléphone;
+        return $this->telephone;
     }
 
-    public function setTéléphone(string $téléphone): static
+    public function setTelephone(string $telephone): static
     {
-        $this->téléphone = $téléphone;
+        $this->telephone = $telephone;
 
         return $this;
     }

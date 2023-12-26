@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="text-center">Liste des contacts</h1>
+        <div class="d-flex justify-content-end">
+            <a href="{{ path('contact.new') }}" class="btn btn-primary mb-4">Ajouter un contact</a>
+        </div>
+        {% for message in  app.flashes('success') %}
+            <div class=" alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% if not contacts is same as ([]) %}
+        <table class="table table-hover mt-4">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Email</th>
+                <th scope="col">Téléphone</th>
+                <th scope="col">Edition</th>
+                <th scope="col">Suppression</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for contact in contacts %}
+                <tr class="table-dark">
+                    <th scope="row">{{ contact.id }}</th>
+                    <td>{{ contact.nom }}</td>
+                    <td>{{ contact.prenom }}</td>
+                    <td>{{contact.email}}</td>
+                    <td>{{ contact.telephone }}</td>
+                    <td><a href="{{ path('contact.edit', {'id': contact.id}) }}" class="btn btn-primary">Editer</a></td>
+                    <td><a href="{{ path('contact.delete',{'id': contact.id}) }}" class ="btn btn primary">Supprimer</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="navigation d-flex justify-content-center mt-4">
+            {{ knp_pagination_render(contacts) }}
+        </div>
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                Aucun contact n'a été trouvé.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

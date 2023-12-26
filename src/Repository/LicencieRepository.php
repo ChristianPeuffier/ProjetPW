@@ -2,23 +2,23 @@
 
 namespace App\Repository;
 
-use App\Entity\Licencié;
+use App\Entity\Licencie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Licencié>
+ * @extends ServiceEntityRepository<Licencie>
  *
- * @method Licencié|null find($id, $lockMode = null, $lockVersion = null)
- * @method Licencié|null findOneBy(array $criteria, array $orderBy = null)
- * @method Licencié[]    findAll()
- * @method Licencié[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Licencie|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Licencie|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Licencie[]    findAll()
+ * @method Licencie[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class LicencieRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Licencié::class);
+        parent::__construct($registry, Licencie::class);
     }
 
 //    /**
