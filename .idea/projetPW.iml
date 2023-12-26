@@ -139,5 +139,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="bootstrap.rtl" level="application" />
+    <orderEntry type="library" name="bootswatch" level="application" />
   </component>
 </module>
