@@ -22,9 +22,8 @@ class Categorie
     #[Assert\NotBlank(message: 'Le code raccourci est obligatoire.')]
     private ?string $code_raccourci = null;
 
-    #[ORM\ManyToOne(inversedBy: 'categorie')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Assert\NotBlank(message: 'Le licencié est obligatoire.')]
+    #[ORM\ManyToOne(targetEntity: Licencie::class, inversedBy: 'categorie')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Licencie $licencie = null;
 
 

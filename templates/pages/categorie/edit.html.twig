@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container">
+
+        <h1 class="mt-4">Modifier un Contact</h1>
+        {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.nom) }}
+            {{ form_widget(form.nom) }}
+            {{ form_errors(form.nom) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.code_raccourci) }}
+            {{ form_widget(form.code_raccourci) }}
+            {{ form_errors(form.code_raccourci) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_row(form.submit) }}
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\LicencieRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
+use phpDocumentor\Reflection\Types\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: LicencieRepository::class)]
@@ -29,7 +31,8 @@ class Licencie
 
     #[ORM\OneToMany(mappedBy: 'licencie', targetEntity: Categorie::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?categorie $categorie = null;
+    #[Assert\NotBlank(message: 'La catégorie est obligatoire.')]
+    private ?PersistentCollection $categorie = null;
 
     #[ORM\ManyToOne(inversedBy: 'licencie')]
     #[ORM\JoinColumn(nullable: true,onDelete: 'SET NULL')]
