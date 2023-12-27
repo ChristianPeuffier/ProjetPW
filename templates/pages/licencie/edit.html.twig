@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container">
+
+        <h1 class="mt-4">Modifier un Licencié</h1>
+        {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.nom) }}
+            {{ form_widget(form.nom) }}
+            {{ form_errors(form.nom) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.prenom) }}
+            {{ form_widget(form.prenom) }}
+            {{ form_errors(form.prenom) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.numeroLicence) }}
+            {{ form_widget(form.numeroLicence) }}
+            {{ form_errors(form.numeroLicence) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.categorie) }}
+            {{ form_widget(form.categorie) }}
+            {{ form_errors(form.categorie) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.contact) }}
+            {{ form_widget(form.contact) }}
+            {{ form_errors(form.contact) }}
+        <div class="form-group">
+            {{ form_row(form.submit) }}
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

@@ -28,16 +28,17 @@ class AppFixtures extends Fixture
                 ->setEmail($this->faker->email())
                 ->setTelephone($this->faker->phoneNumber());
 
+            $category = new Categorie();
+            $category->setNom($this->faker->randomElement(['U7', 'U9', 'U11', 'U13', 'U15', 'U17', 'U19', 'Senior']))
+                ->setCodeRaccourci($this->faker->randomElement(['U7', 'U9', 'U11', 'U13', 'U15', 'U17', 'U19', 'Senior']));
+
+
             $licencie = new Licencie();
             $licencie->setNumeroLicence($this->faker->numberBetween(100, 9999))
                 ->setNom($this->faker->lastName())
                 ->setPrenom($this->faker->firstName())
-                ->setContact($contact);
-
-            $category = new Categorie();
-            $category->setNom($this->faker->randomElement(['U7', 'U9', 'U11', 'U13', 'U15', 'U17', 'U19', 'Senior']))
-                ->setCodeRaccourci($this->faker->randomElement(['U7', 'U9', 'U11', 'U13', 'U15', 'U17', 'U19', 'Senior']))
-                ->setLicencie($licencie);
+                ->setContact($contact)
+                ->setCategorie($category);
 
 
 

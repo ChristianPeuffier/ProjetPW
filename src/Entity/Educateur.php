@@ -27,8 +27,8 @@ class Educateur
     #[Assert\Regex(pattern: '/[0-9]/', message: 'Le mot de passe doit contenir au moins un chiffre.')]
     private ?string $password = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\OneToOne(mappedBy: 'educateur', targetEntity: Licencie::class)]
+    #[ORM\JoinColumn(nullable: true,onDelete: 'SET NULL')]
     private ?Licencie $licencie = null;
 
     public function getId(): ?int

@@ -5,8 +5,6 @@ namespace App\Entity;
 use App\Repository\LicencieRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\PersistentCollection;
-use phpDocumentor\Reflection\Types\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: LicencieRepository::class)]
@@ -29,14 +27,13 @@ class Licencie
     #[Assert\NotBlank(message: 'Le prénom est obligatoire.')]
     private ?string $prenom = null;
 
-    #[ORM\OneToMany(mappedBy: 'licencie', targetEntity: Categorie::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Assert\NotBlank(message: 'La catégorie est obligatoire.')]
-    private ?PersistentCollection $categorie = null;
+    #[ORM\ManyToOne(inversedBy: 'licencie')]
+    #[ORM\JoinColumn(nullable: true,onDelete: 'SET NULL')]
+    private ?Categorie $categorie = null;
 
     #[ORM\ManyToOne(inversedBy: 'licencie')]
     #[ORM\JoinColumn(nullable: true,onDelete: 'SET NULL')]
-    private ?contact $contact = null;
+    private ?Contact $contact = null;
 
 
     public function getId(): ?int
@@ -49,9 +46,9 @@ class Licencie
         return $this->numeroLicence;
     }
 
-    public function setNumeroLicence(int $numéroLicence): static
+    public function setNumeroLicence(int $numeroLicence): static
     {
-        $this->numeroLicence = $numéroLicence;
+        $this->numeroLicence = $numeroLicence;
 
         return $this;
     }
@@ -80,24 +77,24 @@ class Licencie
         return $this;
     }
 
-    public function getContact(): ?contact
+    public function getContact(): ?Contact
     {
         return $this->contact;
     }
 
-    public function setContact(?contact $contact): static
+    public function setContact(?Contact $contact): static
     {
         $this->contact = $contact;
 
         return $this;
     }
 
-    public function getCategorie(): ?categorie
+    public function getCategorie(): ?Categorie
     {
         return $this->categorie;
     }
 
-    public function setCategorie(?categorie $categorie): static
+    public function setCategorie(?Categorie $categorie): static
     {
         $this->categorie = $categorie;
 
