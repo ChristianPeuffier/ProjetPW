@@ -4,16 +4,16 @@
 
 {% block body %}
     <div class="container mt-4">
-        <h1 class="text-center">Liste des categories</h1>
+        <h1 class="text-center">Liste des licenciés</h1>
         <div class="d-flex justify-content-end">
-            <a href="{{ path('licencie.new') }}" class="btn btn-primary mb-4">Ajouter une catégorie</a>
+            <a href="{{ path('licencie.new') }}" class="btn btn-primary mb-4">Ajouter un licencié</a>
         </div>
         {% for message in  app.flashes('success') %}
             <div class=" alert alert-success">
                 {{ message }}
             </div>
         {% endfor %}
-        {% if not licencies is same as ([]) %}
+        {% if licencies is not empty %}
             <table class="table table-hover mt-4">
                 <thead>
                 <tr>

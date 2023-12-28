@@ -1,20 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EducateurController!{% endblock %}
+{% block title %}Educateur{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/chris/Desktop/PW/projetPW/src/Controller/EducateurController.php'|file_link(0) }}">src/Controller/EducateurController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/chris/Desktop/PW/projetPW/templates/educateur/index.html.twig'|file_link(0) }}">templates/educateur/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class="container mt-4">
+        <h1 class="text-center">Liste des éducateurs</h1>
+        <div class="d-flex justify-content-end">
+            <a href="{{ path('educateur.new') }}" class="btn btn-primary mb-4">Ajouter un éducateur</a>
+        </div>
+        {% for message in  app.flashes('success') %}
+            <div class=" alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% if educateurs is not empty %}
+            <table class="table table-hover mt-4">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Numéro de licence</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Edition</th>
+                    <th scope="col">Suppression</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for educateur in educateurs %}
+                    <tr class="table-dark">
+                        <th scope="row">{{ educateur.id }}</th>
+                        <td>{{ educateur.licencie.nom }}</td>
+                        <td>{{ educateur.licencie.prenom }}</td>
+                        <td>{{ educateur.licencie.numeroLicence }}</td>
+                        <td>{{ educateur.email }}</td>
+                        <td><a href="{{ path('educateur.edit', {'id': educateur.id}) }}" class="btn btn-primary">Editer</a></td>
+                        <td><a href="{{ path('educateur.delete',{'id': educateur.id}) }}" class ="btn btn primary">Supprimer</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="navigation d-flex justify-content-center mt-4">
+                {{ knp_pagination_render(educateurs) }}
+            </div>
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                Aucun éducateur n'a été trouvé.
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}
