@@ -85,10 +85,35 @@ class LicencieType extends AbstractType
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
 'choice_label' => 'nom',
+                'label' => 'Catégorie',
+                'label_attr' => [
+                    'class' => 'form-label mt-2'
+                ],
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'La catégorie est obligatoire'
+                    ])
+                ]
             ])
             ->add('contact', EntityType::class, [
                 'class' => Contact::class,
-'choice_label' => 'email'
+'choice_label' => 'email',
+                'label' => 'Contact',
+                'label_attr' => [
+                    'class' => 'form-label mt-2'
+                ],
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'Le contact est obligatoire'
+                    ])
+                ]
+
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',

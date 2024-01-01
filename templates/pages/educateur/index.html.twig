@@ -29,14 +29,17 @@
                 <tbody>
                 {% for educateur in educateurs %}
                     <tr class="table-dark">
-                        <th scope="row">{{ educateur.id }}</th>
-                        <td>{{ educateur.licencie.nom }}</td>
-                        <td>{{ educateur.licencie.prenom }}</td>
-                        <td>{{ educateur.licencie.numeroLicence }}</td>
-                        <td>{{ educateur.email }}</td>
-                        <td><a href="{{ path('educateur.edit', {'id': educateur.id}) }}" class="btn btn-primary">Editer</a></td>
-                        <td><a href="{{ path('educateur.delete',{'id': educateur.id}) }}" class ="btn btn primary">Supprimer</a></td>
-                    </tr>
+
+                        {% if educateur.licencie is not null %}
+                            <th scope="row">{{ educateur.id }}</th>
+                            <td>{{ educateur.licencie.nom }}</td>
+                            <td>{{ educateur.licencie.prenom }}</td>
+                            <td>{{ educateur.licencie.numeroLicence }}</td>
+                            <td>{{ educateur.email }}</td>
+                            <td><a href="{{ path('educateur.edit', {'id': educateur.id}) }}" class="btn btn-primary">Editer</a></td>
+                            <td><a href="{{ path('educateur.delete',{'id': educateur.id}) }}" class ="btn btn primary">Supprimer</a></td>
+                        {% endif %}
+                         </tr>
                 {% endfor %}
                 </tbody>
             </table>

@@ -30,6 +30,7 @@
                 <tbody>
                 {% for licencie in licencies %}
                     <tr class="table-dark">
+                        {% if licencie.categorie is not null %}
                         <th scope="row">{{ licencie.id }}</th>
                         <td>{{ licencie.nom }}</td>
                         <td>{{ licencie.prenom }}</td>
@@ -38,6 +39,7 @@
                         <td>{{ licencie.contact.email }}</td>
                         <td><a href="{{ path('licencie.edit', {'id': licencie.id}) }}" class="btn btn-primary">Editer</a></td>
                         <td><a href="{{ path('licencie.delete',{'id': licencie.id}) }}" class ="btn btn primary">Supprimer</a></td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
                 </tbody>

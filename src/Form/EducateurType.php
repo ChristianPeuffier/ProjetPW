@@ -67,6 +67,18 @@ class EducateurType extends AbstractType
             ->add('licencie', EntityType::class, [
                 'class' => Licencie::class,
 'choice_label' => 'nom',
+                'label' => ' Nom du licencié',
+                'label_attr' => [
+                    'class' => 'form-label mt-2'
+                ],
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'Le licencié est obligatoire'
+                    ])
+                ]
 
             ])
             ->add('submit', SubmitType::class, [
