@@ -10,13 +10,16 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
     private Generator $faker;
+    private UserPasswordHasherInterface $passwordHasher;
 
-    public function __construct()
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
     {
+        $this->passwordHasher = $passwordHasher;
         $this->faker = Factory::create('fr_FR');
     }
     public function load(ObjectManager $manager): void
@@ -44,8 +47,9 @@ class AppFixtures extends Fixture
 
             $educateur = new Educateur();
             $educateur->setEmail($this->faker->email())
-                ->setPassword($this->faker->password())
-                ->setLicencie($licencie);
+                ->setRoles($this->faker->randomElement([['ROLE_ADMIN'], ['ROLE_USER']]))
+                ->setLicencie($licencie)
+                ->setPlainPassword('password');
 
 
             $manager->persist($category);

@@ -4,8 +4,12 @@ namespace App\Form;
 
 use App\Entity\Educateur;
 use App\Entity\Licencie;
+use Doctrine\DBAL\Types\JsonType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -64,13 +68,36 @@ class EducateurType extends AbstractType
                     ])
                 ]
             ])
+            ->add('roles',ChoiceType::class,[
+                'label' => 'Rôle',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
+                ],
+                'choices' => [
+                    'Administrateur' => 'ROLE_ADMIN',
+                    'Utilisateur' => 'ROLE_USER'
+                ],
+                'choice_attr' => [
+                    'class' => 'form-check-input'
+                ],
+
+                'expanded' => true,
+                'multiple' => true,
+                'attr' => [
+                    'class' => 'form-check form-control',
+                ],
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'Le rôle est obligatoire'
+                    ])
+                ]
+            ])
+
             ->add('licencie', EntityType::class, [
                 'class' => Licencie::class,
-'choice_label' => 'nom',
+                'choice_label' => 'nom',
                 'label' => ' Nom du licencié',
-                'label_attr' => [
-                    'class' => 'form-label mt-2'
-                ],
+
                 'attr' => [
                     'class' => 'form-control'
                 ],

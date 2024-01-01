@@ -18,15 +18,17 @@
                     <a class="nav-link" href="{{ path('categorie.index') }}">Catégories</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('educateur.index') }}">Educateur</a>
+                    <a class="nav-link" href="{{ path('educateur.index') }}">Educateurs</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link"  href="{{ path('contact.index') }}" >Contacts</a>
                 </li>
             </ul>
             <form class="d-flex">
-                <input class="form-control me-sm-2 text-black" type="search" placeholder="Search">
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                <label>
+                    <input class="form-control me-sm-2 text-black" type="search" placeholder="Search">
+                </label>
+                <button class="btn btn-warning my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
     </div>
