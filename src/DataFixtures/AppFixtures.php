@@ -47,8 +47,13 @@ class AppFixtures extends Fixture
 
             $educateur = new Educateur();
             $educateur->setEmail($this->faker->email())
-                ->setRoles($this->faker->randomElement([['ROLE_ADMIN'], ['ROLE_USER']]))
-                ->setLicencie($licencie)
+                ->setRoles($this->faker->randomElement([['ROLE_ADMIN'], ['ROLE_EDUCATEUR']]));
+                $number = $this->faker->numberBetween(0, 1);
+                if ($number == 1) {
+                    $educateur->setLicencie($licencie);
+                }
+                $educateur
+
                 ->setPlainPassword('password');
 
 

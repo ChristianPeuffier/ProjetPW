@@ -68,30 +68,6 @@ class EducateurType extends AbstractType
                     ])
                 ]
             ])
-            ->add('roles',ChoiceType::class,[
-                'label' => 'Rôle',
-                'label_attr' => [
-                    'class' => 'form-label mt-4'
-                ],
-                'choices' => [
-                    'Administrateur' => 'ROLE_ADMIN',
-                    'Utilisateur' => 'ROLE_USER'
-                ],
-                'choice_attr' => [
-                    'class' => 'form-check-input'
-                ],
-
-                'expanded' => true,
-                'multiple' => true,
-                'attr' => [
-                    'class' => 'form-check form-control',
-                ],
-                'constraints' => [
-                    new Assert\NotBlank([
-                        'message' => 'Le rôle est obligatoire'
-                    ])
-                ]
-            ])
 
             ->add('licencie', EntityType::class, [
                 'class' => Licencie::class,
