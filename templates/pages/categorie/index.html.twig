@@ -27,8 +27,8 @@
                 <tbody>
                 {% for categorie in categories %}
                     <tr class="table-dark">
-                        <th scope="row">{{ categorie.id }}</th>
-                        <td>{{ categorie.nom }}</td>
+                        <td>{{ categorie.id }}</td>
+                        <td><a href="{{ path('categorie.showLicencie', {'id':categorie.id}) }}" class="btn btn-primary">{{ categorie.nom }}</a></td>
                         <td>{{ categorie.codeRaccourci }}</td>
                         <td><a href="{{ path('categorie.edit', {'id': categorie.id}) }}" class="btn btn-primary">Editer</a></td>
                         <td><a href="{{ path('categorie.delete',{'id': categorie.id}) }}" class ="btn btn primary">Supprimer</a></td>

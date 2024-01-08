@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Categorie;
 use App\Repository\CategorieRepository;
+use App\Repository\LicencieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -76,6 +77,38 @@ class CategorieController extends AbstractController
         $manager->flush();
         $this->addFlash('success', 'La catégorie a bien été supprimée.');
         return $this->redirectToRoute('categorie.index');
+    }
+
+    #[Route('/categorie/{id}', name: 'categorie.showLicencie', methods: ['GET'])]
+    public function showCategorie(LicencieRepository $repository, PaginatorInterface $paginator, Request $request, Categorie $categorie): Response
+    {
+        $id = $request->get('id');
+        $licencies = $paginator->paginate(
+            $repository->findAll(),
+            $request->query->getInt('page', 1),
+            5
+        );
+        return $this->render('pages/categorie/showLicencie.html.twig', [
+            'licencies' => $licencies,
+            'categorie' => $categorie,
+            'id' => $id
+        ]);
+    }
+
+    #[Route('/categorie/contact/{id}', name: 'categorie.showContact', methods: ['GET'])]
+    public function showContact(LicencieRepository $repository, PaginatorInterface $paginator, Request $request, Categorie $categorie): Response
+    {
+        $id = $request->get('id');
+        $licencies = $paginator->paginate(
+            $repository->findAll(),
+            $request->query->getInt('page', 1),
+            5
+        );
+        return $this->render('pages/categorie/showContact.hmtl.twig', [
+            'licencies' => $licencies,
+            'categorie' => $categorie,
+            'id' => $id
+        ]);
     }
 
 }

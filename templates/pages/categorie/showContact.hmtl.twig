@@ -1,0 +1,31 @@
+{%extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">Liste des Contacts de la catégorie {{ categorie.nom }}</h1>
+        {% if categorie is not empty %}
+        <table class="table table-hover mt-4">
+            <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Email</th>
+                <th scope="col">Téléphone</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for licencie in licencies %}
+                {% if categorie.id == licencie.categorie.id %}
+                    <tr class="table-dark">
+                        <td>{{ licencie.contact.nom }}</td>
+                        <td>{{ licencie.contact.prenom }}</td>
+                        <td>{{ licencie.contact.email }}</td>
+                        <td>{{ licencie.contact.telephone }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
