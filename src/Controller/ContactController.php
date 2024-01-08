@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ContactController extends AbstractController
 {
@@ -35,6 +36,7 @@ class ContactController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/contact/new', name: 'contact.new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
@@ -55,6 +57,7 @@ class ContactController extends AbstractController
         );
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/contact/edition/{id}', name: 'contact.edit', methods: ['GET', 'POST'])]
     public function edit(Contact $contact, Request $request, EntityManagerInterface $manager):Response{
 
@@ -75,6 +78,7 @@ class ContactController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/contact/suppression/{id}', name: 'contact.delete', methods: ['GET'])]
     public function delete(Contact $contact, EntityManagerInterface $manager):Response{
         $manager->remove($contact);

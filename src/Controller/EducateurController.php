@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class EducateurController extends AbstractController
 {
@@ -27,6 +28,7 @@ class EducateurController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/educateur/new', name: 'educateur.new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
@@ -46,6 +48,7 @@ class EducateurController extends AbstractController
             ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/educateur/edition/{id}', name: 'educateur.edit', methods: ['GET', 'POST'])]
     public function edit(Educateur $educateur, Request $request, EntityManagerInterface $manager): Response
     {
@@ -65,6 +68,7 @@ class EducateurController extends AbstractController
             ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/educateur/suppression/{id}', name: 'educateur.delete', methods: ['GET', 'POST'])]
     public function delete(Educateur $educateur, EntityManagerInterface $manager): Response
     {

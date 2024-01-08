@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class LicencieController extends AbstractController
 {
@@ -28,6 +29,7 @@ class LicencieController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('licencie/new', name: 'licencie.new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
@@ -47,6 +49,7 @@ class LicencieController extends AbstractController
             ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/licencie/edition/{id}', name: 'licencie.edit', methods: ['GET', 'POST'])]
     public function edit(Licencie $licencie, Request $request, EntityManagerInterface $manager): Response
     {
@@ -65,6 +68,7 @@ class LicencieController extends AbstractController
             ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/licencie/suppression/{id}', name: 'licencie.delete', methods: ['GET'])]
     public function delete(Licencie $licencie,EntityManagerInterface $manager): Response
     {

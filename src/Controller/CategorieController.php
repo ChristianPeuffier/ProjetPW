@@ -11,9 +11,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Form\CategorieType;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CategorieController extends AbstractController
 {
+
     #[Route('/categorie', name: 'categorie.index', methods: ['GET'])]
     public function index(CategorieRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
@@ -27,6 +29,7 @@ class CategorieController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/categorie/new', name: 'categorie.new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
@@ -46,6 +49,7 @@ class CategorieController extends AbstractController
             ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/categorie/edition/{id}', name: 'categorie.edit', methods: ['GET', 'POST'])]
     public function edit(Categorie $categorie, Request $request, EntityManagerInterface $manager): Response
     {
@@ -64,6 +68,7 @@ class CategorieController extends AbstractController
             ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/categorie/suppression/{id}', name: 'categorie.delete', methods: ['GET'])]
     public function delete(Categorie $categorie,EntityManagerInterface $manager): Response
     {

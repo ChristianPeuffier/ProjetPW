@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Educateur;
 use App\Form\RegistrationType;
+use App\Repository\EducateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,22 +29,5 @@ class SecurityController extends AbstractController
         //nothing to do here
     }
 
-    #[Route('/inscription', name: 'security.registration',methods: ['GET', 'POST'])]
-    public function registration(Request $request, EntityManagerInterface $manager): Response
-    {
-        $educateur = new Educateur();
-        $educateur->setRoles(['ROLE_EDUCATEUR']);
-        $form = $this->createForm(RegistrationType::class, $educateur);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $educateur = $form->getData();
-            $this->addFlash('success', 'Votre compte a bien été créé.');
-            $manager->persist($educateur);
-            $manager->flush();
-            return $this->redirectToRoute('security.login');
-        }
-        return $this->render('pages/security/registration.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
+
 }
