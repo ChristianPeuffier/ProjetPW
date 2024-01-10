@@ -40,9 +40,13 @@ class Contact
     #[ORM\JoinColumn(nullable: false)]
     private Collection $licencie;
 
+    #[ORM\ManyToMany(targetEntity: MailContact::class, mappedBy: 'ManyToMany')]
+    private Collection $mailContacts;
+
     public function __construct()
     {
         $this->licencie = new ArrayCollection();
+        $this->mailContacts = new ArrayCollection();
     }
 
 
@@ -125,6 +129,33 @@ class Contact
             if ($licencie->getContact() === $this) {
                 $licencie->setContact(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MailContact>
+     */
+    public function getMailContacts(): Collection
+    {
+        return $this->mailContacts;
+    }
+
+    public function addMailContact(MailContact $mailContact): static
+    {
+        if (!$this->mailContacts->contains($mailContact)) {
+            $this->mailContacts->add($mailContact);
+            $mailContact->addManyToMany($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMailContact(MailContact $mailContact): static
+    {
+        if ($this->mailContacts->removeElement($mailContact)) {
+            $mailContact->removeManyToMany($this);
         }
 
         return $this;

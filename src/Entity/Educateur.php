@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EducateurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -37,6 +39,14 @@ class Educateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'educateur', targetEntity: Licencie::class)]
     #[ORM\JoinColumn(nullable: true,onDelete: 'SET NULL')]
     private ?Licencie $licencie = null;
+
+    #[ORM\ManyToMany(targetEntity: MailEdu::class, mappedBy: 'listEducateur')]
+    private Collection $mailEdus;
+
+    public function __construct()
+    {
+        $this->mailEdus = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -130,5 +140,32 @@ class Educateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString(): string
     {
         return $this->email;
+    }
+
+    /**
+     * @return Collection<int, MailEdu>
+     */
+    public function getMailEdus(): Collection
+    {
+        return $this->mailEdus;
+    }
+
+    public function addMailEdu(MailEdu $mailEdu): static
+    {
+        if (!$this->mailEdus->contains($mailEdu)) {
+            $this->mailEdus->add($mailEdu);
+            $mailEdu->addListEducateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMailEdu(MailEdu $mailEdu): static
+    {
+        if ($this->mailEdus->removeElement($mailEdu)) {
+            $mailEdu->removeListEducateur($this);
+        }
+
+        return $this;
     }
 }
