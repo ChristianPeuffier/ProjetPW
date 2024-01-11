@@ -77,12 +77,12 @@ class MailContact
     /**
      * @return Collection<int, Contact>
      */
-    public function getManyToMany(): Collection
+    public function getDestinataires(): Collection
     {
         return $this->destinataires;
     }
 
-    public function addManyToMany(Contact $destinataires): static
+    public function addDestinataires(Contact $destinataires): static
     {
         if (!$this->destinataires->contains($destinataires)) {
             $this->destinataires->add($destinataires);
@@ -91,7 +91,7 @@ class MailContact
         return $this;
     }
 
-    public function removeManyToMany(Contact $manyToMany): static
+    public function removeDestinataires(Contact $manyToMany): static
     {
         $this->destinataires->removeElement($manyToMany);
 
