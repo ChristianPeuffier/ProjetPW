@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MailContact{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="text-center">Mails des contacts</h1>
+        <div class="d-flex justify-content-center">
+            {% if mails is not empty %}
+                <table class="table table-striped table-bordered table-hover col-8">
+                    <thead>
+                    <tr>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Prénom</th>
+                        <th scope="col">Mail</th>
+                        <th scope="col">Liste des éducateurs</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for mail in mails %}
+                        <tr>
+                            <td>{{ mail.dateEnvoi ? mail.dateEnvoi|date('d-m-Y H:i:s') : 'non défini'}}</td>
+                            <td>{{ mail.objet}}</td>
+                            <td>{{ mail.message }}</td>
+                            <td>{% for destinataire in mail.destinataires %}
+                                    {{ destinataire.nom }}<br>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Il n'y a pas de mail</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

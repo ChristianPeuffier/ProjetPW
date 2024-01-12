@@ -16,7 +16,7 @@ class MailContact
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[ORM\Column]
     private ?\DateTimeImmutable $dateEnvoi = null;
 
     #[ORM\Column(length: 255)]
